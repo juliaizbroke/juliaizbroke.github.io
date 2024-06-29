@@ -4,6 +4,7 @@
 <head>
     <title>Car Accessories</title>
     <link rel="stylesheet" href="/css/global.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
  
 <body>
@@ -22,6 +23,7 @@
         <label for="amount">Amount:</label>
         <input type="number" id="amount" min="1" value="1">
         <br>
+        <br>
         <button type="button" onclick="addToProductList()">Add</button>
     </form>
  
@@ -37,47 +39,43 @@
             <!-- Product list items will be added here dynamically -->
         </tbody>
     </table>
-    <h2>Total Price: <span id="totalPrice">$0.00</span></h2>
-    <h2>VAT Amount(7%): <span id="vatAmount">$0.00</span></h2>
-    <h2>Net Amount: <span id="netAmount">$0.00</span></h2>
+    <h2><span id="totalPrice">Total Price: $0</span></h2>
+    <h2><span id="vatAmount">Vat Amount(7%): $0</span></h2>
+    <h2><span id="netAmount">Net Amount: $0</span></h2>
     <script>
         var totalPrice = 0
         function addToProductList() {
-            var accessorySelect = document.getElementById("accessory");
-            var accessoryOption = accessorySelect.options[accessorySelect.selectedIndex];
-            var accessoryName = accessoryOption.text;
-            var accessoryPrice = accessoryOption.value;
-            var amountInput = document.getElementById("amount");
-            var amount = amountInput.value;
- 
-            var productList = document.getElementById("productList");
-            var newRow = productList.insertRow(-1);
-            var accessoryCell = newRow.insertCell(0);
-            var amountCell = newRow.insertCell(1);
-            var priceCell = newRow.insertCell(2);
- 
-            accessoryCell.innerHTML = accessoryName;
-            amountCell.innerHTML = amount;
-            priceCell.innerHTML = "$" + (accessoryPrice * amount);
- 
+            var accessory = $('#accessory').find('option:selected').text();
+            var value = $('#accessory').val();
+            var amount = $("#amount").val();
+            var price = amount * value;
+
+            const tbodyRef = $('#productList tbody')
+            tbodyRef.before(
+                    `<tr>
+                    <td>${accessory}</td>
+                    <td>${amount}</td>
+                    <td>${price}</td>
+                    </tr>`)
+
             // Update the total price
-            totalPrice += accessoryPrice * amount
-            document.getElementById("totalPrice").innerHTML = "$" + totalPrice;
+            totalPrice += price
+            $("#totalPrice").html("Total Price: $" + totalPrice);
 
             calculateVAT();
         }
  
         function updateTotalPrice() {
             var totalPrice = 0;
-            var productList = document.getElementById("productList");
-            var rows = productList.getElementsByTagName("tr");
+            var productList = $("#productList");
+            var rows = $("tr");
  
             for (var i = 1; i < rows.length - 1; i++) {
-                var priceCell = rows[i].getElementsByTagName("td")[2];
+                var priceCell = rows[i].$("td")[2];
                 totalPrice += parseInt(priceCell.innerHTML);
             }
  
-            document.getElementById("totalPrice").innerHTML = totalPrice;
+            $("#totalPrice").html('Total Price: ' + totalPrice);
         }
 
         function calculateVAT() {
@@ -85,8 +83,8 @@
             var vatAmount = totalPrice * vatRate;
             var netAmount = totalPrice + vatAmount;
 
-            document.getElementById("vatAmount").innerHTML = "$" + vatAmount.toFixed(2);
-            document.getElementById("netAmount").innerHTML = "$" + netAmount.toFixed(2);
+            $("#vatAmount").html("VAT(7%): $" + vatAmount.toFixed(2));
+            $("#netAmount").html("Net Amount: $" + netAmount.toFixed(2));
         }
 
     </script>
