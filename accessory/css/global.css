@@ -1,0 +1,25 @@
+
+table {
+    width: 100%;
+}
+table tr:nth-child(even) {
+    background-color: #dc91ad;
+    font-size: larger;
+}
+    
+table tr:nth-child(odd) {
+    background-color: #ffffff;
+    font-size: larger;
+}
+ 
+table tfoot {
+    font-weight: bold;
+}
+button{
+    border-radius: 20px;
+    font-size: 20px;
+    width: 80px;
+    height: 30px;
+    background-color: #dc91ad;
+    border:none;
+}
