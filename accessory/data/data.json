@@ -1,0 +1,17 @@
+[
+    {
+        "quantity": 1,
+        "description": "Car Cover",
+        "unitPrice": 100.00
+    },
+    {
+        "quantity": 3,
+        "description": "Phone Holder",
+        "unitPrice": 30.00
+    },
+    {
+        "quantity": 2,
+        "description": "Floor Mat",
+        "unitPrice": 50.00
+    }
+]
